@@ -1,3 +1,4 @@
+import java.util.Random;
 import java.util.Scanner;
 
 public class Logic {
@@ -19,7 +20,7 @@ public class Logic {
         System.out.println(ConsoleColors.RESET);
     }
 
-    static void playerTwo(char[][] board) {
+    /*static void playerTwo(char[][] board) {
         Scanner scanner = new Scanner(System.in);
         String userTwoInput;
         while (true) {
@@ -34,6 +35,19 @@ public class Logic {
         System.out.println(ConsoleColors.RED);
         makeMove(board, userTwoInput, 'O');
         System.out.println(ConsoleColors.RESET);
+    }*/
+
+    static void computerTurn(char[][] board) {
+        Random rand = new Random();
+        int computerMove;
+        while (true) {
+            computerMove = rand.nextInt(9) + 1;
+            if (validMove(board, Integer.toString(computerMove))) {
+                break;
+            }
+        }
+        System.out.println("Komputer wybrał " + computerMove);
+        makeMove(board, Integer.toString(computerMove), 'O');
     }
 
     static boolean validMove(char[][] board, String position) {

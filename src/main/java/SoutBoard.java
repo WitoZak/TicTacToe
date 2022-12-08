@@ -1,7 +1,7 @@
 
 public class SoutBoard {
 
-    public static void SoutBoard(char[][] board) {
+    public static void soutBoard(char[][] board) {
 
 
 
@@ -14,4 +14,3 @@ public class SoutBoard {
 
     }
 }
-

@@ -14,14 +14,19 @@ public class MainApp {
             if (Mechanics.isGameOver(board)) {
                 break;
             }
-            SoutBoard.SoutBoard(board);
+            SoutBoard.soutBoard(board);
 
-            Logic.playerTwo(board);
+            /*Logic.playerTwo(board);
             if (Mechanics.isGameOver(board)) {
                 break;
             }
-            SoutBoard.SoutBoard(board);
+            SoutBoard.soutBoard(board);*/
 
+            Logic.computerTurn(board);
+            if (Mechanics.isGameOver(board)) {
+                break;
+            }
+            SoutBoard.soutBoard(board);
         }
     }
 

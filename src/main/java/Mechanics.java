@@ -2,13 +2,13 @@ public class Mechanics {
 
     static boolean isGameOver(char[][] board) {
         if (winCondition(board, 'X')) {
-            SoutBoard.SoutBoard(board);
+            SoutBoard.soutBoard(board);
             System.out.println(ConsoleColors.BLUE + "Player1 wygrał!" + ConsoleColors.RESET);
             return true;
         }
 
         if (winCondition(board, 'O')) {
-            SoutBoard.SoutBoard(board);
+            SoutBoard.soutBoard(board);
             System.out.println(ConsoleColors.RED + "Player2 wygrał!" + ConsoleColors.RESET);
             return true;
         }
@@ -20,7 +20,7 @@ public class Mechanics {
                 }
             }
         }
-        SoutBoard.SoutBoard(board);
+        SoutBoard.soutBoard(board);
         System.out.println("Gra zakończyła się remisem");
         return true;
     }
