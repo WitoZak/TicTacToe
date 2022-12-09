@@ -7,45 +7,43 @@ import static org.testng.AssertJUnit.*;
 public class TestingMainApp {
 
     @Test
-    public void testNewGameBoard(){
 
-        char[][] expectedGameBoard = {
-                {' ', ' ', ' '},
-                {' ', ' ', ' '},
-                {' ', ' ', ' '},
-        };
+    public void validateOWinInColumn() {
         char[][] testBoard = new char[3][3];
-        SoutBoard.soutBoard(testBoard);
-        assertTrue(Arrays.deepEquals(expectedGameBoard, testBoard));
-    }
-    @Test
+        Logic instance = new Logic();
+        Mechanics winner = new Mechanics();
+        instance.makeMove(testBoard, "1", 'O');
+        instance.makeMove(testBoard, "2", 'X');
+        instance.makeMove(testBoard, "4", 'O');
+        instance.makeMove(testBoard, "3", 'X');
+        instance.makeMove(testBoard, "7", 'O');
 
-
-    public void validateOWinInColumn(char[][] board, char symbol) {
-
-    }
-
-    public void validateOWinInCross(char[][] board, char symbol) {
-
+        assertTrue(winner.winCondition(testBoard, 'O'));
     }
 
-    public void validateXWinInRow(char[][] board, char symbol) {
 
-    }
+    public void validateOWinInRow() {
 
-    public void validateXWinInColumn(char[][] board, char symbol) {
 
     }
 
-    public void validateXWinInCross(char[][] board, char symbol) {
-
-    }
-    public void validateAllTies(char[][] board, char symbol) {
-
-    }
-    public void validateIsMoveValid(char[][] board, char symbol) {
+    public void validateOWinInCross() {
 
     }
 
+    public void validateXWinInRow() {
+
+    }
+
+    public void validateXWinInColumn() {
+
+    }
+
+    public void validateXWinInCross() {
+
+    }
+    public void validateAllTies() {
+
+    }
 
 }
