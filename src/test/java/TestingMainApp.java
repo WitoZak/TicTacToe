@@ -1,22 +1,85 @@
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.Assert.*;
+
 
 public class TestingMainApp {
 
     @Test
-    public void validateOWinInColumn() {
-        char[][] testBoard = new char[3][3];
-        Logic instance = new Logic();
-        Mechanics winner = new Mechanics();
-        instance.makeMove(testBoard, "1", 'O');
-        instance.makeMove(testBoard, "2", 'X');
-        instance.makeMove(testBoard, "4", 'O');
-        instance.makeMove(testBoard, "3", 'X');
-        instance.makeMove(testBoard, "7", 'O');
+    public void testValidMove() {
+        char[][] board = {{' ', ' ', ' '},
+                {' ', ' ', ' '},
+                {' ', ' ', ' '}};
 
-        assertTrue(winner.winCondition(testBoard, 'O'));
+        assertTrue(Logic.validMove(board, "1"));
+        assertFalse(Logic.validMove(board, "10"));
+
+        board[0][0] = 'X';
+        assertFalse(Logic.validMove(board, "1"));
+    }
+
+    @Test
+    public void testMakeMove() {
+        char[][] board = {{' ', 'O', 'X'},
+                {'X', ' ', 'X'},
+                {'O', 'X', 'O'}};
+
+        Logic.makeMove(board, "1", 'X');
+        assertEquals('X', board[0][0]);
+
+        Logic.makeMove(board, "5", 'O');
+        assertEquals('O', board[1][1]);
+    }
+
+    @Test
+    public void testWinConditionXRow() {
+        char[][] board = {{'X', 'X', 'X'},
+                {' ', ' ', ' '},
+                {' ', ' ', ' '}};
+
+        assertTrue(Mechanics.winCondition(board, 'X'));
+    }
+
+    @Test
+    public void testWinConditionORow() {
+        char[][] board = {{' ', ' ', ' '},
+                {'O', 'O', 'O'},
+                {' ', ' ', ' '}};
+
+
+        assertTrue(Mechanics.winCondition(board, 'O'));
+    }
+
+    @Test
+    public void testWinConditionXCol() {
+        char[][] board = {{'X', ' ', ' '},
+                {'X', ' ', ' '},
+                {'X', ' ', ' '}};
+
+        assertTrue(Mechanics.winCondition(board, 'X'));
+    }
+
+    @Test
+    public void testWinConditionOCol() {
+        char[][] board = {{'O', ' ', ' '},
+                {'O', ' ', ' '},
+                {'O', ' ', ' '}};
+
+        assertTrue(Mechanics.winCondition(board, 'O'));
+    }
+
+    @Test
+    public void testWinConditionXCross() {
+        char[][] board = {{'X', 'O', 'X'},
+                {'O', 'X', 'O'},
+                {'X', 'O', 'X'}};
+
+        assertTrue(Mechanics.winCondition(board, 'X'));
+
+        assertFalse(Mechanics.winCondition(board, 'O'));
     }
 
 }
