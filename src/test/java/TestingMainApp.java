@@ -1,13 +1,11 @@
-import org.testng.annotations.Test;
 
-import java.util.Arrays;
+import org.junit.Test;
 
-import static org.testng.AssertJUnit.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestingMainApp {
 
     @Test
-
     public void validateOWinInColumn() {
         char[][] testBoard = new char[3][3];
         Logic instance = new Logic();
@@ -19,31 +17,6 @@ public class TestingMainApp {
         instance.makeMove(testBoard, "7", 'O');
 
         assertTrue(winner.winCondition(testBoard, 'O'));
-    }
-
-
-    public void validateOWinInRow() {
-
-
-    }
-
-    public void validateOWinInCross() {
-
-    }
-
-    public void validateXWinInRow() {
-
-    }
-
-    public void validateXWinInColumn() {
-
-    }
-
-    public void validateXWinInCross() {
-
-    }
-    public void validateAllTies() {
-
     }
 
 }
