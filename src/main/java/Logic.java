@@ -9,74 +9,73 @@ public class Logic {
         while (true) {
             System.out.println(ConsoleColors.BLUE + "Player1 jaki jest Twój ruch? --> X <--" + ConsoleColors.RESET);
             userOneInput = scanner.nextLine();
-            if (validMove(board, userOneInput)) {
-                break;
-            } else {
+
+            if (!validMove(board, userOneInput)) {
                 System.out.println(userOneInput + " jest niedozwolonym ruchem");
+                continue;
             }
+
+            int row = Integer.parseInt(userOneInput.split(",")[0]);
+            int col = Integer.parseInt(userOneInput.split(",")[1]);
+            if (board[row][col] != ' ') {
+                System.out.println("To pole jest już zajęte");
+                continue;
+            }
+
+            System.out.println(ConsoleColors.BLUE);
+            makeMove(board, userOneInput, 'X');
+            System.out.println(ConsoleColors.RESET);
+            break;
         }
-        System.out.println(ConsoleColors.BLUE);
-        makeMove(board, userOneInput, 'X');
-        System.out.println(ConsoleColors.RESET);
     }
 
-    /*static void playerTwo(char[][] board) {
-        Scanner scanner = new Scanner(System.in);
-        String userTwoInput;
-        while (true) {
-            System.out.println(ConsoleColors.RED + "Player2 jaki jest Twój ruch? --> O <--" + ConsoleColors.RESET);
-            userTwoInput = scanner.nextLine();
-            if (validMove(board, userTwoInput)) {
-                break;
-            } else {
-                System.out.println(userTwoInput + " jest niedozwolonym ruchem");
-            }
-        }
-        System.out.println(ConsoleColors.RED);
-        makeMove(board, userTwoInput, 'O');
-        System.out.println(ConsoleColors.RESET);
-    }*/
-
     static void computerTurn(char[][] board) {
-        Random rand = new Random();
-        int computerMove;
-        while (true) {
-            computerMove = rand.nextInt(9) + 1;
-            if (validMove(board, Integer.toString(computerMove))) {
-                break;
-            }
+        int size = board.length;
+        Random random = new Random();
+
+        int i = random.nextInt(size);
+        int j = random.nextInt(size);
+
+        if (board[i][j] == ' ') {
+            board[i][j] = 'O';
+        } else {
+            computerTurn(board);
         }
-        System.out.println("Komputer wybrał " + computerMove);
-        makeMove(board, Integer.toString(computerMove), 'O');
     }
 
     static boolean validMove(char[][] board, String position) {
-        return switch (position) {
-            case "1" -> (board[0][0] == ' ');
-            case "2" -> (board[0][1] == ' ');
-            case "3" -> (board[0][2] == ' ');
-            case "4" -> (board[1][0] == ' ');
-            case "5" -> (board[1][1] == ' ');
-            case "6" -> (board[1][2] == ' ');
-            case "7" -> (board[2][0] == ' ');
-            case "8" -> (board[2][1] == ' ');
-            case "9" -> (board[2][2] == ' ');
-            default -> false;
-        };
+        String[] parts = position.split(",");
+        int row = Integer.parseInt(parts[0]);
+        int col = Integer.parseInt(parts[1]);
+
+        return row >= 0 && row < board.length && col >= 0 && col < board[0].length;
     }
 
+
     static void makeMove(char[][] board, String position, char symbol) {
-        switch (position) {
-            case "1" -> board[0][0] = symbol;
-            case "2" -> board[0][1] = symbol;
-            case "3" -> board[0][2] = symbol;
-            case "4" -> board[1][0] = symbol;
-            case "5" -> board[1][1] = symbol;
-            case "6" -> board[1][2] = symbol;
-            case "7" -> board[2][0] = symbol;
-            case "8" -> board[2][1] = symbol;
-            case "9" -> board[2][2] = symbol;
-            default -> System.out.println("Wybierz inne pole");
+        int row, col;
+
+        String[] parts = position.split(",");
+        if (parts.length != 2) {
+            System.out.println(position + "jest niedozwolonym ruchem");
+            return;
         }
+
+        try {
+            row = Integer.parseInt(parts[0]);
+            col = Integer.parseInt(parts[1]);
+        } catch (NumberFormatException e) {
+            System.out.println(position + "jest niedozwolonym ruchem");
+            return;
+        }
+
+        if (row < 0 || row >= 10 || col < 0 || col >= 10) {
+            System.out.println(position + "jest niedozwolonym ruchem");
+            return;
+        }
+
+        board[row][col] = symbol;
     }
+
+
 }
