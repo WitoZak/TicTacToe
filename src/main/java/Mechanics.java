@@ -25,62 +25,50 @@ public class Mechanics {
         return true;
     }
 
-    static boolean winCondition(char[][] board, char player) {
-        int winLength;
-        if (board.length == 3) {
-            winLength = 3;
-        } else {
-            winLength = 5;
-        }
+    public static boolean winCondition(char[][] board, char player) {
+        int size = board.length;
 
-        for (int i = 0; i < board.length; i++) {
+        for (int i = 0; i < size; i++) {
             int count = 0;
-            for (int j = 0; j < board[i].length; j++) {
+            for (int j = 0; j < size; j++) {
                 if (board[i][j] == player) {
                     count++;
-                    if (count == winLength) {
-                        return true;
-                    }
-                } else {
-                    count = 0;
                 }
+            }
+            if (count == (size == 3 ? 3 : 5)) {
+                return true;
             }
         }
 
-        for (int j = 0; j < board[0].length; j++) {
+        for (int j = 0; j < size; j++) {
             int count = 0;
-            for (int i = 0; i < board.length; i++) {
+            for (int i = 0; i < size; i++) {
                 if (board[i][j] == player) {
                     count++;
-                    if (count == winLength) {
-                        return true;
-                    }
-                } else {
-                    count = 0;
                 }
+            }
+            if (count == (size == 3 ? 3 : 5)) {
+                return true;
             }
         }
 
-        for (int i = 0; i <= board.length - winLength; i++) {
-            for (int j = 0; j <= board[i].length - winLength; j++) {
-                if (board[i][j] == player && board[i + 1][j + 1] == player && board[i + 2][j + 2] == player &&
-                        board[i + 3][j + 3] == player && board[i + 4][j + 4] == player) {
-                    return true;
-                }
+        int count = 0;
+        for (int i = 0; i < size; i++) {
+            if (board[i][i] == player) {
+                count++;
             }
         }
-
-        for (int i = 0; i <= board.length - winLength; i++) {
-            for (int j = winLength - 1; j < board[i].length; j++) {
-                if (board[i][j] == player && board[i + 1][j - 1] == player && board[i + 2][j - 2] == player &&
-                        board[i + 3][j - 3] == player && board[i + 4][j - 4] == player) {
-                    return true;
-                }
-            }
+        if (count == (size == 3 ? 3 : 5)) {
+            return true;
         }
 
-        return false;
+        count = 0;
+        for (int i = 0; i < size; i++) {
+            if (board[i][size - i - 1] == player) {
+                count++;
+            }
+        }
+        return count == (size == 3 ? 3 : 5);
     }
-
 
 }
