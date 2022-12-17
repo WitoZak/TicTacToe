@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -7,7 +9,7 @@ public class Logic {
         Scanner scanner = new Scanner(System.in);
         String userOneInput;
         while (true) {
-            System.out.println(ConsoleColors.BLUE + "Player1 jaki jest Twój ruch? --> X <--" + ConsoleColors.RESET);
+            System.out.println("Player1 jaki jest Twój ruch? --> X <--");
             userOneInput = scanner.nextLine();
 
             if (!validMove(board, userOneInput)) {
@@ -22,14 +24,13 @@ public class Logic {
                 continue;
             }
 
-            System.out.println(ConsoleColors.BLUE);
             makeMove(board, userOneInput, 'X');
-            System.out.println(ConsoleColors.RESET);
             break;
         }
     }
 
     static void computerTurn(char[][] board) {
+        /*
         int size = board.length;
         Random random = new Random();
 
@@ -41,14 +42,79 @@ public class Logic {
         } else {
             computerTurn(board);
         }
+        */
+        List<int[]> availableMoves = getAvailableMoves(board);
+        int bestScore = Integer.MIN_VALUE;
+        int[] bestMove = null;
+        for (int[] move : availableMoves) {
+            board[move[0]][move[1]] = 'O';
+            int score = minimax(board, 0, false);
+            board[move[0]][move[1]] = ' ';
+            if (score > bestScore) {
+                bestScore = score;
+                bestMove = move;
+            }
+        }
+        board[bestMove[0]][bestMove[1]] = 'O';
     }
 
-    static boolean validMove(char[][] board, String position) {
-        String[] parts = position.split(",");
-        int row = Integer.parseInt(parts[0]);
-        int col = Integer.parseInt(parts[1]);
+    public static int minimax(char[][] board, int depth, boolean isMaximizingPlayer) {
+        if (Mechanics.hasWon(board, 'X')) {
+            return -1;
+        }
+        if (Mechanics.hasWon(board, 'O')) {
+            return 1;
+        }
+        if (Mechanics.isDraw(board)) {
+            return 0;
+        }
 
-        return row >= 0 && row < board.length && col >= 0 && col < board[0].length;
+        if (isMaximizingPlayer) {
+            int bestScore = Integer.MIN_VALUE;
+            List<int[]> availableMoves = getAvailableMoves(board);
+            for (int[] move : availableMoves) {
+                board[move[0]][move[1]] = 'O';
+                int score = minimax(board, depth + 1, false);
+                board[move[0]][move[1]] = ' ';
+                bestScore = Math.max(score, bestScore);
+            }
+            return bestScore;
+        } else {
+            int bestScore = Integer.MAX_VALUE;
+            List<int[]> availableMoves = getAvailableMoves(board);
+            for (int[] move : availableMoves) {
+                board[move[0]][move[1]] = 'X';
+                int score = minimax(board, depth + 1, true);
+                board[move[0]][move[1]] = ' ';
+                bestScore = Math.min(score, bestScore);
+            }
+            return bestScore;
+        }
+    }
+    private static List<int[]> getAvailableMoves(char[][] board) {
+        List<int[]> availableMoves = new ArrayList<>();
+
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                if (board[i][j] == ' ') {
+                    availableMoves.add(new int[] {i, j});
+                }
+            }
+        }
+
+        return availableMoves;
+    }
+
+
+    static boolean validMove(char[][] board, String position) {
+        int row = Integer.parseInt(position.split(",")[0]);
+        int col = Integer.parseInt(position.split(",")[1]);
+
+        if (row < 0 || row >= board.length || col < 0 || col >= board[0].length) {
+            return false;
+        }
+
+        return board[row][col] == ' ';
     }
 
 
@@ -76,6 +142,5 @@ public class Logic {
 
         board[row][col] = symbol;
     }
-
 
 }

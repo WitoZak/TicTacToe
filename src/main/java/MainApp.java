@@ -3,8 +3,6 @@ import java.util.Scanner;
 public class MainApp {
     public static void main(String[] args) {
 
-        Intro.welcome();
-        Intro.instruction();
 
         Scanner scanner = new Scanner(System.in);
         System.out.println("Na jakiej planszy chcesz grać (3x3 or 10x10):");

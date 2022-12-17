@@ -29,15 +29,16 @@ public class TestingMainApp {
                 {' ', 'O', ' '},
                 {' ', ' ', ' '}};
         // when
-        Logic.makeMove(board, "0,2", 'O');
-        expectedBoard = new char[][]{{' ', ' ', 'O'},
+        Logic.makeMove(board, "0,1", 'O');
+        expectedBoard = new char[][]{{' ', 'O', 'X'},
                 {' ', 'O', ' '},
                 {' ', ' ', ' '}};
         // then
         assertArrayEquals(expectedBoard, board);
     }
+
     @Test
-    public void testComputerTurn() {
+    public void testComputerRandomTurn() {
         // given
         char[][] board = {{' ', ' ', ' '},
                 {' ', ' ', ' '},
@@ -56,6 +57,49 @@ public class TestingMainApp {
         }
         assert moveMade;
     }
+
+    @Test
+    public void testComputerTurn() {
+        // given
+        char[][] board = new char[][]{
+                {' ', ' ', ' '},
+                {' ', ' ', ' '},
+                {' ', ' ', ' '}
+        };
+        // when
+        Logic.computerTurn(board);
+        // then
+        assertEquals('O', board[0][0]);
+    }
+
+    @Test
+    public void testComputerTurnNext() {
+        // given
+        char[][] board = new char[][]{
+                {'X', ' ', ' '},
+                {' ', ' ', ' '},
+                {' ', ' ', ' '}
+        };
+        // when
+        Logic.computerTurn(board);
+        // then
+        assertNotEquals('O', board[0][0]);
+    }
+
+    @Test
+    public void testComputerTurnNextNext() {
+        // given
+        char[][] board = new char[][]{
+                {' ', ' ', ' '},
+                {' ', 'X', ' '},
+                {' ', ' ', ' '}
+        };
+        // when
+        Logic.computerTurn(board);
+        // then
+        assertNotEquals('O', board[1][1]);
+    }
+
     @Test
     public void testIsGameOver() {
         // given
@@ -66,6 +110,7 @@ public class TestingMainApp {
         // then
         assertFalse(Mechanics.isGameOver(board));
     }
+
     @Test
     public void testValidMove() {
         // given
@@ -78,6 +123,7 @@ public class TestingMainApp {
         assertFalse(Logic.validMove(board, "4,4"));
 
     }
+
     @Test
     public void testWinConditionXRow() {
         // when
@@ -85,8 +131,9 @@ public class TestingMainApp {
                 {' ', ' ', ' '},
                 {' ', ' ', ' '}};
         // then
-        assertTrue(Mechanics.winCondition(board, 'X'));
+        assertTrue(Mechanics.hasWon(board, 'X'));
     }
+
     @Test
     public void testWinConditionORow() {
         // when
@@ -94,8 +141,9 @@ public class TestingMainApp {
                 {'O', 'O', 'O'},
                 {' ', ' ', ' '}};
         // then
-        assertTrue(Mechanics.winCondition(board, 'O'));
+        assertTrue(Mechanics.hasWon(board, 'O'));
     }
+
     @Test
     public void testWinConditionXCol() {
         // when
@@ -103,8 +151,9 @@ public class TestingMainApp {
                 {'X', ' ', ' '},
                 {'X', ' ', ' '}};
         // then
-        assertTrue(Mechanics.winCondition(board, 'X'));
+        assertTrue(Mechanics.hasWon(board, 'X'));
     }
+
     @Test
     public void testWinConditionOCol() {
         // when
@@ -112,8 +161,9 @@ public class TestingMainApp {
                 {'O', ' ', ' '},
                 {'O', ' ', ' '}};
         // then
-        assertTrue(Mechanics.winCondition(board, 'O'));
+        assertTrue(Mechanics.hasWon(board, 'O'));
     }
+
     @Test
     public void testWinConditionXCross() {
         // when
@@ -121,8 +171,9 @@ public class TestingMainApp {
                 {'O', 'X', 'O'},
                 {'X', 'O', 'X'}};
         // then
-        assertTrue(Mechanics.winCondition(board, 'X'));
+        assertTrue(Mechanics.hasWon(board, 'X'));
     }
+
     @Test
     public void testWinConditionOCross() {
         // when
@@ -130,8 +181,9 @@ public class TestingMainApp {
                 {'X', 'O', 'O'},
                 {'X', 'X', 'O'}};
         // then
-        assertTrue(Mechanics.winCondition(board, 'O'));
+        assertTrue(Mechanics.hasWon(board, 'O'));
     }
+
     @Test
     public void testWinConditionOCross10x10() {
         // when
@@ -146,8 +198,9 @@ public class TestingMainApp {
                 {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
                 {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}};
         // then
-        assertTrue(Mechanics.winCondition(board, 'O'));
+        assertTrue(Mechanics.hasWon(board, 'O'));
     }
+
     @Test
     public void testWinConditionXCross10x10() {
         // when
@@ -162,6 +215,6 @@ public class TestingMainApp {
                 {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
                 {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}};
         // then
-        assertFalse(Mechanics.winCondition(board, 'X'));
+        assertFalse(Mechanics.hasWon(board, 'X'));
     }
 }
